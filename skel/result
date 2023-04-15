@@ -1,0 +1,74 @@
+Starting test 1
+Finished test 1
+Test 1:		PASSED
+Starting test 2
+Finished test 2
+Test 2:		PASSED
+Starting test 3
+Finished test 3
+Test 3:		PASSED
+Starting test 4
+Finished test 4
+Test 4:		PASSED
+Starting test 5
+Finished test 5
+Test 5:		PASSED
+Starting test 6
+Finished test 6
+Test 6:		PASSED
+Starting test 7
+Finished test 7
+Test 7:		PASSED
+Starting test 8
+Finished test 8
+Test 8:		PASSED
+Starting test 9
+Finished test 9
+Test 9:		PASSED
+Starting test 10
+Finished test 10
+Test 10:		PASSED
+
+Run pylint
+
+************* Module consumer
+tema/consumer.py:49:0: C0303: Trailing whitespace (trailing-whitespace)
+************* Module marketplace
+tema/marketplace.py:35:0: C0301: Line too long (107/100) (line-too-long)
+tema/marketplace.py:36:0: C0301: Line too long (101/100) (line-too-long)
+tema/marketplace.py:52:0: C0303: Trailing whitespace (trailing-whitespace)
+tema/marketplace.py:56:0: C0303: Trailing whitespace (trailing-whitespace)
+tema/marketplace.py:72:0: C0301: Line too long (103/100) (line-too-long)
+tema/marketplace.py:80:0: C0301: Line too long (103/100) (line-too-long)
+tema/marketplace.py:83:0: C0301: Line too long (124/100) (line-too-long)
+tema/marketplace.py:93:0: C0303: Trailing whitespace (trailing-whitespace)
+tema/marketplace.py:97:0: C0303: Trailing whitespace (trailing-whitespace)
+tema/marketplace.py:121:89: C0303: Trailing whitespace (trailing-whitespace)
+tema/marketplace.py:122:83: C0303: Trailing whitespace (trailing-whitespace)
+tema/marketplace.py:143:0: C0301: Line too long (104/100) (line-too-long)
+tema/marketplace.py:149:57: C0303: Trailing whitespace (trailing-whitespace)
+tema/marketplace.py:154:22: C0303: Trailing whitespace (trailing-whitespace)
+tema/marketplace.py:14:0: C0103: Constant name "logger" doesn't conform to UPPER_CASE naming style ('(([A-Z_][A-Z0-9_]*)|(__.*__))$' pattern) (invalid-name)
+tema/marketplace.py:17:0: C0103: Constant name "timestamp" doesn't conform to UPPER_CASE naming style ('(([A-Z_][A-Z0-9_]*)|(__.*__))$' pattern) (invalid-name)
+tema/marketplace.py:51:8: W1202: Use % formatting in logging functions and pass the % parameters as arguments (logging-format-interpolation)
+tema/marketplace.py:57:8: W1202: Use % formatting in logging functions and pass the % parameters as arguments (logging-format-interpolation)
+tema/marketplace.py:72:8: W1202: Use % formatting in logging functions and pass the % parameters as arguments (logging-format-interpolation)
+tema/marketplace.py:80:16: W1202: Use % formatting in logging functions and pass the % parameters as arguments (logging-format-interpolation)
+tema/marketplace.py:83:8: W1202: Use % formatting in logging functions and pass the % parameters as arguments (logging-format-interpolation)
+tema/marketplace.py:92:8: W1202: Use % formatting in logging functions and pass the % parameters as arguments (logging-format-interpolation)
+tema/marketplace.py:98:8: W1202: Use % formatting in logging functions and pass the % parameters as arguments (logging-format-interpolation)
+tema/marketplace.py:113:8: W1202: Use % formatting in logging functions and pass the % parameters as arguments (logging-format-interpolation)
+tema/marketplace.py:127:24: W1202: Use % formatting in logging functions and pass the % parameters as arguments (logging-format-interpolation)
+tema/marketplace.py:130:8: W1202: Use % formatting in logging functions and pass the % parameters as arguments (logging-format-interpolation)
+tema/marketplace.py:143:8: W1202: Use % formatting in logging functions and pass the % parameters as arguments (logging-format-interpolation)
+tema/marketplace.py:153:16: W1202: Use % formatting in logging functions and pass the % parameters as arguments (logging-format-interpolation)
+tema/marketplace.py:156:8: W1202: Use % formatting in logging functions and pass the % parameters as arguments (logging-format-interpolation)
+tema/marketplace.py:165:8: W1202: Use % formatting in logging functions and pass the % parameters as arguments (logging-format-interpolation)
+tema/marketplace.py:170:8: W1202: Use % formatting in logging functions and pass the % parameters as arguments (logging-format-interpolation)
+************* Module producer
+tema/producer.py:38:0: C0303: Trailing whitespace (trailing-whitespace)
+tema/producer.py:44:85: C0303: Trailing whitespace (trailing-whitespace)
+
+------------------------------------------------------------------
+Your code has been rated at 7.09/10 (previous run: 7.54/10, -0.45)
+
