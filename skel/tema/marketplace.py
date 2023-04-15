@@ -6,6 +6,15 @@ Assignment 1
 March 2021
 """
 
+from threading import Lock
+import logging
+from time import gmtime, strftime
+from logging.handlers import RotatingFileHandler
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+logger.addHandler(RotatingFileHandler(filename='marketplace.log', maxBytes=4096, backupCount=10))
+timestamp = strftime('%Y-%m-%d %H:%M:%S', gmtime())
 
 class Marketplace:
     """
@@ -19,13 +28,34 @@ class Marketplace:
         :type queue_size_per_producer: Int
         :param queue_size_per_producer: the maximum size of a queue associated with each producer
         """
-        pass
+        self.queue_size_per_producer = queue_size_per_producer
+        # dictionar in care vor fi inserate valor de forma: key: Int - id ul producatorului,
+        # value: [] - lista de produse ale respectivului producator
+        self.producers_dictionary = {}
+        # dictionar in care vor fi inserate valor de forma: key: Int - id ul cosului de cumparaturi, value:
+        # [] - lista de produse ale respectivului cos - un prdus este de forma (producer_id, product)
+        self.carts_dictionary = {}
+        # lock folosit pentru atunci cand un producer este inregistrat
+        self.register_producer_lock = Lock()
+        # lock folosit pentru atunci cand un produs este publish in marketplace
+        self.publish_lock = Lock()
+        # lock folosit pentru atunci cand un produs este mutat din lista intr un cos de cumparaturi
+        self.add_to_cart_lock = Lock()
+        # lock folosit pentru atunci cand un nou cart este inregistart
+        self.new_cart_lock = Lock()
 
     def register_producer(self):
         """
         Returns an id for the producer that calls this.
         """
-        pass
+        logger.info(f'{timestamp}: Start register_producer')
+        
+        with self.register_producer_lock:
+            producer_id = len(self.producers_dictionary)
+            self.producers_dictionary[producer_id] = []
+            
+        logger.info(f'{timestamp}: Registered producer_id {producer_id}')
+        return producer_id
 
     def publish(self, producer_id, product):
         """
@@ -39,7 +69,19 @@ class Marketplace:
 
         :returns True or False. If the caller receives False, it should wait and then try again.
         """
-        pass
+        logger.info(f'{timestamp}: Start publish with product {product} and producer_id {producer_id}')
+        producer_queue = self.producers_dictionary[producer_id]
+
+        # un singur produs poate fi adaugat in lista produselor la un moment de timp
+        with self.publish_lock:
+            # daca este loc in lista => adaug produsul + return True, altfel return False
+            if len(producer_queue) < self.queue_size_per_producer:
+                producer_queue.append(product)
+                logger.info(f'{timestamp}: Published product {product} from producer_id {producer_id}')
+                return True
+
+        logger.info(f'{timestamp}: Producer Queue is full. Cannot publish product {product} from producer_id {producer_id}')
+        return False
 
     def new_cart(self):
         """
@@ -47,7 +89,14 @@ class Marketplace:
 
         :returns an int representing the cart_id
         """
-        pass
+        logger.info(f'{timestamp}: Start new_cart')
+        
+        with self.new_cart_lock:
+            cart_id = len(self.carts_dictionary)
+            self.carts_dictionary[cart_id] = []
+        
+        logger.info(f'{timestamp}: New cart_id {cart_id}')
+        return cart_id
 
     def add_to_cart(self, cart_id, product):
         """
@@ -61,7 +110,25 @@ class Marketplace:
 
         :returns True or False. If the caller receives False, it should wait and then try again
         """
-        pass
+        logger.info(f'{timestamp}: Start add_to_cart with product {product} and cart_id {cart_id}')
+        cart = self.carts_dictionary[cart_id]
+
+        # un singur produs poate fi adaugat in cos la un moment de timp
+        with self.add_to_cart_lock:
+            # iterez prin toate produsele tuturor producatorilor
+            for producer_id, producer_queue in self.producers_dictionary.items():
+                for i, (prod) in enumerate(producer_queue):
+                    # daca am gasit produsul cautat, il adaug in cosul de cumparturi, sub 
+                    # forma(producer_id, product) + il sterg din lista produselor + 
+                    # return True; altfel return False
+                    if prod == product:
+                        cart.append((producer_id, prod))
+                        self.producers_dictionary[producer_id].pop(i)
+                        logger.info(f'{timestamp}: Added product {prod} to cart_id {cart_id}')
+                        return True
+
+        logger.info(f'{timestamp}: Cannot add product {product} to cart_id {cart_id}')
+        return False
 
     def remove_from_cart(self, cart_id, product):
         """
@@ -73,7 +140,20 @@ class Marketplace:
         :type product: Product
         :param product: the product to remove from cart
         """
-        pass
+        logger.info(f'{timestamp}: Start remove_from_cart with product {product} and cart_id {cart_id}')
+        cart = self.carts_dictionary[cart_id]
+
+        # iterez prin toate produsele din cos
+        for i, (id_prod, prod) in enumerate(cart):
+            # daca am gasit produsul cautat, il sterg din cosul de cumparturi +
+            # il adaug inapoi in lista producatorului sau 
+            if prod == product:
+                cart.pop(i)
+                self.producers_dictionary[id_prod].append(product)
+                logger.info(f'{timestamp}: Removed product {product} from cart_id {cart_id}')
+                return 
+
+        logger.info(f'{timestamp}: Cannot remove product {product} from cart_id {cart_id}')
 
     def place_order(self, cart_id):
         """
@@ -82,4 +162,11 @@ class Marketplace:
         :type cart_id: Int
         :param cart_id: id cart
         """
-        pass
+        logger.info(f'{timestamp}: Start place_order for cart_id {cart_id}')
+        cart = self.carts_dictionary[cart_id]
+
+        # adaug doar produsele(al doilea element din tuple) in lista pe care o returnez
+        products_list = list(map(lambda x: x[1], cart))
+        logger.info(f'{timestamp}: Placed order cart_id {cart_id}')
+
+        return products_list
