@@ -1,14 +1,16 @@
-2023-04-15 21:13:19: Start add_to_cart with product Coffee(name='Indonezia', price=1, acidity=5.05, roast_level='MEDIUM') and cart_id 501
-2023-04-15 21:13:19: Added product Coffee(name='Indonezia', price=1, acidity=5.05, roast_level='MEDIUM') to cart_id 501
-2023-04-15 21:13:19: Start add_to_cart with product Coffee(name='Indonezia', price=1, acidity=5.05, roast_level='MEDIUM') and cart_id 501
-2023-04-15 21:13:19: Added product Coffee(name='Indonezia', price=1, acidity=5.05, roast_level='MEDIUM') to cart_id 501
-2023-04-15 21:13:19: Start add_to_cart with product Coffee(name='Indonezia', price=1, acidity=5.05, roast_level='MEDIUM') and cart_id 501
-2023-04-15 21:13:19: Added product Coffee(name='Indonezia', price=1, acidity=5.05, roast_level='MEDIUM') to cart_id 501
-2023-04-15 21:13:19: Start add_to_cart with product Coffee(name='Arabica', price=9, acidity=5.02, roast_level='MEDIUM') and cart_id 501
-2023-04-15 21:13:19: Added product Coffee(name='Arabica', price=9, acidity=5.02, roast_level='MEDIUM') to cart_id 501
-2023-04-15 21:13:19: Start add_to_cart with product Coffee(name='Arabica', price=9, acidity=5.02, roast_level='MEDIUM') and cart_id 501
-2023-04-15 21:13:19: Added product Coffee(name='Arabica', price=9, acidity=5.02, roast_level='MEDIUM') to cart_id 501
-2023-04-15 21:13:19: Start add_to_cart with product Coffee(name='Arabica', price=9, acidity=5.02, roast_level='MEDIUM') and cart_id 501
-2023-04-15 21:13:19: Added product Coffee(name='Arabica', price=9, acidity=5.02, roast_level='MEDIUM') to cart_id 501
-2023-04-15 21:13:19: Start place_order for cart_id 501
-2023-04-15 21:13:19: Placed order cart_id 501
+2023-04-16 16:52:01: Start add_to_cart with product Coffee(name='Ethiopia', price=10, acidity=5.09, roast_level='MEDIUM') and cart_id 577
+2023-04-16 16:52:01: Added product Coffee(name='Ethiopia', price=10, acidity=5.09, roast_level='MEDIUM') to cart_id 577
+2023-04-16 16:52:01: Start add_to_cart with product Coffee(name='Ethiopia', price=10, acidity=5.09, roast_level='MEDIUM') and cart_id 577
+2023-04-16 16:52:01: Added product Coffee(name='Ethiopia', price=10, acidity=5.09, roast_level='MEDIUM') to cart_id 577
+2023-04-16 16:52:01: Start add_to_cart with product Coffee(name='Ethiopia', price=10, acidity=5.09, roast_level='MEDIUM') and cart_id 577
+2023-04-16 16:52:01: Added product Coffee(name='Ethiopia', price=10, acidity=5.09, roast_level='MEDIUM') to cart_id 577
+2023-04-16 16:52:01: Start add_to_cart with product Coffee(name='Ethiopia', price=10, acidity=5.09, roast_level='MEDIUM') and cart_id 577
+2023-04-16 16:52:01: Added product Coffee(name='Ethiopia', price=10, acidity=5.09, roast_level='MEDIUM') to cart_id 577
+2023-04-16 16:52:01: Start remove_from_cart with product Coffee(name='Ethiopia', price=10, acidity=5.09, roast_level='MEDIUM') and cart_id 577
+2023-04-16 16:52:01: Removed product Coffee(name='Ethiopia', price=10, acidity=5.09, roast_level='MEDIUM') from cart_id 577
+2023-04-16 16:52:01: Start remove_from_cart with product Coffee(name='Ethiopia', price=10, acidity=5.09, roast_level='MEDIUM') and cart_id 577
+2023-04-16 16:52:01: Removed product Coffee(name='Ethiopia', price=10, acidity=5.09, roast_level='MEDIUM') from cart_id 577
+2023-04-16 16:52:01: Start remove_from_cart with product Coffee(name='Ethiopia', price=10, acidity=5.09, roast_level='MEDIUM') and cart_id 577
+2023-04-16 16:52:01: Removed product Coffee(name='Ethiopia', price=10, acidity=5.09, roast_level='MEDIUM') from cart_id 577
+2023-04-16 16:52:01: Start place_order for cart_id 577
+2023-04-16 16:52:01: Placed order cart_id 577
