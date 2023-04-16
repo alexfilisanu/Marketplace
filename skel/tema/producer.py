@@ -35,13 +35,13 @@ class Producer(Thread):
         self.products = products
         self.marketplace = marketplace
         self.republish_wait_time = republish_wait_time
-        
+
     def run(self):
         # inregistrare producer
         producer_id = self.marketplace.register_producer()
         while True:
             for product_id, quantity, wait_time in self.products:
-                # pentru fiecare produs din quantity il produc(sleep(wait_time)), iar 
+                # pentru fiecare produs din quantity il produc(sleep(wait_time)), iar
                 # apoi incer sa l publish pana cand aceasta actiune este posibila (daca
                 # nu -> sleep(republish_wait_time))
                 for _ in range(quantity):

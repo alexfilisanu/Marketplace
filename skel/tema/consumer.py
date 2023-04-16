@@ -46,7 +46,7 @@ class Consumer(Thread):
                     for _ in range(operation["quantity"]):
                         while not self.marketplace.add_to_cart(cart_id, operation["product"]):
                             sleep(self.retry_wait_time)
-                        
+
                 elif operation["type"] == "remove":
                     for _ in range(operation["quantity"]):
                         self.marketplace.remove_from_cart(cart_id, operation["product"])
