@@ -10,6 +10,7 @@ from threading import Lock
 import logging
 from time import gmtime, strftime
 from logging.handlers import RotatingFileHandler
+import unittest
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -170,3 +171,78 @@ class Marketplace:
         logger.info(f'{timestamp}: Placed order cart_id {cart_id}')
 
         return products_list
+
+class TestMarketplace(unittest.TestCase):
+    def setUp(self):
+        self.marketplace = Marketplace(queue_size_per_producer=3)
+        self.producer_id = 0
+        self.marketplace.producers_dictionary[self.producer_id] = []
+        self.cart_id = 0
+        self.marketplace.carts_dictionary[self.cart_id] = []
+        self.product_coffee = {
+            "product_type": "Coffee",
+            "name": "Indonezia",
+            "acidity": 5.05,
+            "roast_level": "MEDIUM",
+            "price": 1
+        }
+        self.product_tea = {
+            "product_type": "Tea",
+            "name": "Linden",
+            "type": "Herbal",
+            "price": 9
+        }
+        
+    def test_register_producer(self):
+        test_producer_id = self.marketplace.register_producer()
+        
+        self.assertIsInstance(test_producer_id, int)
+        self.assertEqual(test_producer_id, 1)
+
+    def test_publish_empty_queue(self):
+        self.assertTrue(self.marketplace.publish(self.producer_id, self.product_coffee))
+        self.assertIn(self.product_coffee, self.marketplace.producers_dictionary[self.producer_id])
+
+    def test_publish_full_queue(self):
+        for i in range(self.marketplace.queue_size_per_producer + 1):
+            if i < self.marketplace.queue_size_per_producer:
+                self.assertTrue(self.marketplace.publish(self.producer_id, self.product_coffee))
+            else:
+                self.assertFalse(self.marketplace.publish(self.producer_id, self.product_coffee))
+             
+    def test_new_cart(self):
+        test_cart_id = self.marketplace.new_cart()
+        
+        self.assertIsInstance(test_cart_id, int)
+        self.assertEqual(test_cart_id, 1)
+
+    def test_add_to_cart_published_product(self):
+        self.marketplace.publish(self.producer_id, self.product_coffee)
+        
+        self.assertTrue(self.marketplace.add_to_cart(self.cart_id, self.product_coffee))
+        self.assertIn((self.producer_id, self.product_coffee), self.marketplace.carts_dictionary[self.cart_id])
+        self.assertEqual(len(self.marketplace.carts_dictionary[self.cart_id]), 1)
+
+    def test_add_to_cart_unpublished_product(self):
+        self.assertFalse(self.marketplace.add_to_cart(self.cart_id, self.product_coffee))
+        self.assertEqual(len(self.marketplace.carts_dictionary[self.cart_id]), 0)
+
+    def test_remove_from_cart(self):
+        self.marketplace.publish(self.producer_id, self.product_coffee)
+        self.marketplace.add_to_cart(self.cart_id, self.product_coffee)
+        self.marketplace.remove_from_cart(self.cart_id, self.product_coffee)
+        
+        self.assertNotIn(self.product_coffee, self.marketplace.carts_dictionary[self.cart_id])
+        self.assertEqual(len(self.marketplace.carts_dictionary[self.cart_id]), 0)
+
+    def test_place_order(self):
+        self.marketplace.publish(self.producer_id, self.product_coffee)
+        self.marketplace.publish(self.producer_id, self.product_tea)
+        self.marketplace.add_to_cart(self.cart_id, self.product_coffee)
+        self.marketplace.add_to_cart(self.cart_id, self.product_tea)
+        order = self.marketplace.place_order(self.cart_id)
+        
+        self.assertIsInstance(order, list)
+        self.assertEqual(len(order), 2)
+        self.assertEqual(order[0], self.product_coffee)
+        self.assertEqual(order[1], self.product_tea)
